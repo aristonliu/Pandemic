@@ -1,21 +1,11 @@
 version: "3.9"
 services:
     rpy_jupyter:
-      build:
-        dockerfile: Dockerfile
-        context: ./
+      image: jupyter/datascience-notebook:latest
       environment:
-          - NOTEBOOK_ARGS=--port=${PORT} --NotebookApp.password='' --NotebookApp.token=''
+          - NOTEBOOK_ARGS=--port=8123 --NotebookApp.password='' --NotebookApp.token=''
       ports:
-          - "${PORT}:${PORT}"
+              - "8123:8123"
       volumes:
           - ./data:/home/jovyan/data
-          - itnotebooks:/home/jovyan/work
-          # - ./work:/home/jovyan/work
-
-volumes:
-  itnotebooks:
-    driver_opts:
-      type: "cifs"
-      o: "addr=fcm.net,username=ituser,password=ioas09mq,mfsymlinks,uid=1000,suid,rw"
-      device: "//fcm.net/it/itnotebook"
+          - ./notebooks:/home/jovyan/work
